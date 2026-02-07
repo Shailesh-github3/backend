@@ -1,0 +1,28 @@
+# Maven
+target/
+!.mvn/wrapper/maven-wrapper.jar
+
+# IDE
+.idea/
+*.iml
+*.ipr
+*.iws
+.classpath
+.project
+.settings/
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Environment variables (NEVER commit these!)
+application-prod.properties
+.env
+.env.local
+
+# Logs
+*.log
+logs/
+
+# Secrets (CRITICAL!)
+secrets/

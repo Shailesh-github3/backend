@@ -1,0 +1,22 @@
+package com.edubridge.backend.dto.request;
+
+import jakarta.validation.constraints.Max;
+import jakarta.validation.constraints.Min;
+import lombok.Data;
+
+@Data
+public class CollegeSearchRequest {
+
+    private Long collegeId;
+    private String branch;
+    private String yearOfStudy;
+    private String name;
+    private String availabilityStatus;
+
+    @Min(value = 0, message = "Page number must be >= 0")
+    private int page = 0;
+
+    @Min(value = 1, message = "Page size must be >= 1")
+    @Max(value = 100, message = "Page size must be <= 100")
+    private int size = 20;
+}
