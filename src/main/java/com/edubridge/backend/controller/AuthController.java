@@ -26,7 +26,7 @@ public class AuthController {
 
     @PostMapping("/login")
     public ResponseEntity<?> login(@Valid @RequestBody LoginRequest loginRequest) {
-        // ✅ No try-catch - Spring Security and GlobalExceptionHandler handle errors
+        // No try-catch - Spring Security and GlobalExceptionHandler handle errors
         var authentication = authenticationManager.authenticate(
                 new UsernamePasswordAuthenticationToken(
                         loginRequest.getEmail(),

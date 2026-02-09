@@ -29,7 +29,7 @@ public class ForumController {
     @Autowired
     private UserService userService;
 
-    // ✅ Create a new forum (College students only)
+    // Create a new forum (College students only)
     @PostMapping("/create")
     public ResponseEntity<?> createForum(@Valid @RequestBody CreateForumRequest request,
                                          @AuthenticationPrincipal UserDetails currentUser) {
@@ -38,7 +38,7 @@ public class ForumController {
         return ResponseEntity.ok(forum);
     }
 
-    // ✅ Create a new post in a forum (College students only)
+    // Create a new post in a forum (College students only)
     @PostMapping("/post")
     public ResponseEntity<?> createPost(@Valid @RequestBody CreatePostRequest request,
                                         @AuthenticationPrincipal UserDetails currentUser) {
@@ -47,7 +47,7 @@ public class ForumController {
         return ResponseEntity.ok(post);
     }
 
-    // ✅ Add a comment to a post (College students only)
+    // Add a comment to a post (College students only)
     @PostMapping("/comment")
     public ResponseEntity<?> createComment(@Valid @RequestBody CreateCommentRequest request,
                                            @AuthenticationPrincipal UserDetails currentUser) {
@@ -56,7 +56,7 @@ public class ForumController {
         return ResponseEntity.ok(comment);
     }
 
-    // ✅ Get all forums (Anyone can view)
+    // Get all forums (Anyone can view)
     @GetMapping("/all")
     public ResponseEntity<?> getAllForums() {
         List<Forum> forums = forumService.getAllForums();
@@ -72,7 +72,7 @@ public class ForumController {
         return ResponseEntity.ok(response);
     }
 
-    // ✅ Get forums by college (Anyone can view)
+    // Get forums by college (Anyone can view)
     @GetMapping("/college/{collegeId}")
     public ResponseEntity<?> getForumsByCollege(@PathVariable Long collegeId) {
         List<Forum> forums = forumService.getForumsByCollege(collegeId);
@@ -87,17 +87,17 @@ public class ForumController {
         return ResponseEntity.ok(response);
     }
 
-    // ✅ Get all posts in a forum (Anyone can view)
+    // Get all posts in a forum (Anyone can view)
     @GetMapping("/{forumId}/posts")
     public ResponseEntity<?> getPostsByForum(@PathVariable Long forumId) {
         List<ForumPost> posts = forumService.getPostsByForum(forumId);
 
         List<ForumPostResponse> response = posts.stream()
                 .map(post -> {
-                    // ✅ CORRECT: Get author by ID (not email!)
+                    // CORRECT: Get author by ID (not email!)
                     User authorUser = userService.getUserById(post.getAuthorId());
 
-                    // ✅ Since ONLY college students can create posts, get college profile
+                    // Since ONLY college students can create posts, get college profile
                     CollegeStudentProfile collegeProfile = userService.getCollegeProfile(authorUser.getId());
                     String authorName = collegeProfile.getName();
 
@@ -109,17 +109,17 @@ public class ForumController {
         return ResponseEntity.ok(response);
     }
 
-    // ✅ Get all comments on a post (Anyone can view)
+    // Get all comments on a post (Anyone can view)
     @GetMapping("/post/{postId}/comments")
     public ResponseEntity<?> getCommentsByPost(@PathVariable Long postId) {
         List<ForumComment> comments = forumService.getCommentsByPost(postId);
 
         List<ForumCommentResponse> response = comments.stream()
                 .map(comment -> {
-                    // ✅ CORRECT: Get author by ID
+                    // CORRECT: Get author by ID
                     User authorUser = userService.getUserById(comment.getAuthorId());
 
-                    // ✅ Only college students can comment
+                    // Only college students can comment
                     CollegeStudentProfile collegeProfile = userService.getCollegeProfile(authorUser.getId());
                     String authorName = collegeProfile.getName();
 

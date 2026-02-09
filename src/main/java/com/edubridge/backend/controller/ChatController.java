@@ -32,7 +32,7 @@ public class ChatController {
     @PostMapping("/send")
     public ResponseEntity<?> sendMessage(@Valid @RequestBody SendMessageRequest request,
                                          @AuthenticationPrincipal UserDetails currentUser) {
-        // ✅ No try-catch needed
+        // No try-catch needed
         User sender = userService.getUserByEmail(currentUser.getUsername());
         Message message = chatService.sendMessage(
                 sender.getId(),
@@ -45,7 +45,7 @@ public class ChatController {
     @GetMapping("/history")
     public ResponseEntity<?> getChatHistory(@RequestParam Long userId,
                                             @AuthenticationPrincipal UserDetails currentUser) {
-        // ✅ No try-catch needed
+        // No try-catch needed
         User sender = userService.getUserByEmail(currentUser.getUsername());
         List<Message> history = chatService.getChatHistory(sender.getId(), userId);
 

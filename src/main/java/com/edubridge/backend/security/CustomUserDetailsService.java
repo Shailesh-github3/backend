@@ -26,7 +26,7 @@ public class CustomUserDetailsService implements UserDetailsService {
             throw new UsernameNotFoundException("User not found with email: "+email);
         }
 
-        // ✅ CRITICAL FIX: Add authorities based on user role
+        // CRITICAL FIX: Add authorities based on user role
         List<GrantedAuthority> authorities = new ArrayList<>();
         authorities.add(new SimpleGrantedAuthority("ROLE_" + user.getRole().name()));
 
@@ -36,7 +36,7 @@ public class CustomUserDetailsService implements UserDetailsService {
         return org.springframework.security.core.userdetails.User
                 .withUsername(user.getEmail())
                 .password(user.getPassword())
-                .authorities(authorities)  // ✅ NOT EMPTY ANYMORE
+                .authorities(authorities)  // NOT EMPTY ANYMORE
                 .build();
     }
 }

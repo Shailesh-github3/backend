@@ -37,7 +37,7 @@ public class UserService {
 
     // 1. Register
     public String registerUser(RegistrationRequest request) {
-        // ✅ Throw exception instead of returning error message
+        // Throw exception instead of returning error message
         if (userRepository.existsByEmail(request.getEmail())) {
             throw new BadRequestException("Email already registered!");
         }
@@ -94,7 +94,7 @@ public class UserService {
                 throw new ResourceNotFoundException("School profile not found");
             }
 
-            // ✅ Only update provided fields (null-safe)
+            // Only update provided fields (null-safe)
             if (updateDetails.getName() != null) profile.setName(updateDetails.getName());
             if (updateDetails.getSchoolName() != null) profile.setSchoolName(updateDetails.getSchoolName());
             if (updateDetails.getClassLevel() != null) profile.setClassLevel(updateDetails.getClassLevel());
@@ -108,7 +108,7 @@ public class UserService {
                 throw new ResourceNotFoundException("College profile not found");
             }
 
-            // ✅ Only update provided fields (null-safe)
+            // Only update provided fields (null-safe)
             if (updateDetails.getName() != null) profile.setName(updateDetails.getName());
             if (updateDetails.getBio() != null) profile.setBio(updateDetails.getBio());
             if (updateDetails.getSkills() != null) profile.setSkills(updateDetails.getSkills());
@@ -249,7 +249,7 @@ public class UserService {
         return profile;
     }
 
-    // ✅ Helper: Get school profile by user ID
+    // Helper: Get school profile by user ID
     public SchoolStudentProfile getSchoolProfile(Long userId) {
         SchoolStudentProfile profile = schoolProfileRepository.findByUserId(userId);
         if(profile == null){

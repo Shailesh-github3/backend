@@ -9,7 +9,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 
-@Service  // ✅ This is critical - makes it a Spring service
+@Service  // This is critical - makes it a Spring service
 public class CollegeService {
 
     @Autowired

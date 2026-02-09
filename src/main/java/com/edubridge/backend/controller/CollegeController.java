@@ -11,8 +11,8 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
-@RestController  // ✅ This is critical - makes it a REST controller
-@RequestMapping("/api/college")  // ✅ Base path for all endpoints
+@RestController
+@RequestMapping("/api/college")  // Base path for all endpoints
 public class CollegeController {
 
     @Autowired
@@ -26,14 +26,14 @@ public class CollegeController {
         private String description;
     }
 
-    // ✅ Get all colleges - NO AUTH REQUIRED
+    // Get all colleges - NO AUTH REQUIRED
     @GetMapping("/all")
     public ResponseEntity<?> getAllColleges() {
         List<College> colleges = collegeService.getAllColleges();
         return ResponseEntity.ok(colleges);
     }
 
-    // ✅ Create a college - NO AUTH REQUIRED (for now)
+    // Create a college - NO AUTH REQUIRED (for now)
     @PostMapping("/create")
     public ResponseEntity<?> createCollege(@Valid @RequestBody CreateCollegeRequest request) {
         College college = collegeService.createCollege(
@@ -44,7 +44,7 @@ public class CollegeController {
         return ResponseEntity.ok(college);
     }
 
-    // ✅ Get college by ID - NO AUTH REQUIRED
+    // Get college by ID - NO AUTH REQUIRED
     @GetMapping("/{id}")
     public ResponseEntity<?> getCollegeById(@PathVariable Long id) {
         College college = collegeService.getCollegeById(id);

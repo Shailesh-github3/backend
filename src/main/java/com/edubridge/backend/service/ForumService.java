@@ -35,7 +35,7 @@ public class ForumService {
     @Autowired
     private CollegeRepository collegeRepository;
 
-    // ✅ Only college students can create forums
+    // Only college students can create forums
     @Transactional
     public Forum createForum(CreateForumRequest request, Long userId) {
         // Verify user is a college student
@@ -46,7 +46,7 @@ public class ForumService {
             throw new BadRequestException("Only college students can create forums");
         }
 
-        // ✅ Verify college exists
+        // Verify college exists
         boolean collegeExists = collegeRepository.existsById(request.getCollegeId());
         if (!collegeExists) {
             throw new BadRequestException("College with ID " + request.getCollegeId() + " does not exist. Please create the college first.");
@@ -61,7 +61,7 @@ public class ForumService {
         return forumRepository.save(forum);
     }
 
-    // ✅ Only college students can create posts
+    // Only college students can create posts
     @Transactional
     public ForumPost createPost(CreatePostRequest request, Long userId) {
         // Verify user is a college student
@@ -89,7 +89,7 @@ public class ForumService {
         return forumPostRepository.save(post);
     }
 
-    // ✅ Only college students can comment
+    // Only college students can comment
     @Transactional
     public ForumComment createComment(CreateCommentRequest request, Long userId) {
         // Verify user is a college student
@@ -115,22 +115,22 @@ public class ForumService {
         return forumCommentRepository.save(comment);
     }
 
-    // ✅ Anyone can view forums (read-only)
+    // Anyone can view forums (read-only)
     public List<Forum> getAllForums() {
         return forumRepository.findAll();
     }
 
-    // ✅ Anyone can view forums by college
+    // Anyone can view forums by college
     public List<Forum> getForumsByCollege(Long collegeId) {
         return forumRepository.findByCollegeId(collegeId);
     }
 
-    // ✅ Anyone can view posts in a forum
+    // Anyone can view posts in a forum
     public List<ForumPost> getPostsByForum(Long forumId) {
         return forumPostRepository.findByForumId(forumId);
     }
 
-    // ✅ Anyone can view comments on a post
+    // Anyone can view comments on a post
     public List<ForumComment> getCommentsByPost(Long postId) {
         return forumCommentRepository.findByPostId(postId);
     }

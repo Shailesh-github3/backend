@@ -15,7 +15,7 @@ public interface CollegeProfileRepository extends JpaRepository<CollegeStudentPr
 
     CollegeStudentProfile findByUserId(Long userId);
 
-    // ✅ WITHOUT PAGINATION (for backward compatibility)
+    // WITHOUT PAGINATION (for backward compatibility)
     List<CollegeStudentProfile> findByCollegeId(Long collegeId);
     List<CollegeStudentProfile> findByBranch(String branch);
     List<CollegeStudentProfile> findByYearOfStudy(String yearOfStudy);
@@ -28,7 +28,7 @@ public interface CollegeProfileRepository extends JpaRepository<CollegeStudentPr
     @Query("SELECT c FROM CollegeStudentProfile c WHERE LOWER(c.name) LIKE LOWER(CONCAT('%', :name, '%'))")
     List<CollegeStudentProfile> findByNameContaining(@Param("name") String name);
 
-    // ✅ WITH PAGINATION (new methods)
+    //WITH PAGINATION (new methods)
     Page<CollegeStudentProfile> findByCollegeId(Long collegeId, Pageable pageable);
     Page<CollegeStudentProfile> findByBranch(String branch, Pageable pageable);
     Page<CollegeStudentProfile> findByYearOfStudy(String yearOfStudy, Pageable pageable);

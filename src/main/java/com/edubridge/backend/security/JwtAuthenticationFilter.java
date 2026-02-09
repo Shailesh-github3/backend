@@ -32,7 +32,7 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
                                     HttpServletResponse response,
                                     FilterChain filterChain) throws ServletException, IOException {
 
-        logger.info("🔍 JWT Filter triggered for: {}", request.getRequestURI());
+        logger.info("JWT Filter triggered for: {}", request.getRequestURI());
 
         final String authHeader = request.getHeader("Authorization");
         logger.info("Header Authorization: {}", authHeader != null ? authHeader.substring(0, Math.min(30, authHeader.length())) : "null");
@@ -48,10 +48,10 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
                 username = jwtUtil.extractUsername(token);
                 logger.info("Username extracted from token: {}", username);
             } catch (Exception e) {
-                logger.error("❌ Error extracting username from token", e);
+                logger.error("Error extracting username from token", e);
             }
         } else {
-            logger.warn("⚠️ No Authorization header or missing Bearer prefix");
+            logger.warn("No Authorization header or missing Bearer prefix");
         }
 
         if (username != null && SecurityContextHolder.getContext().getAuthentication() == null) {
@@ -63,7 +63,7 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
                         userDetails.getUsername(), userDetails.getAuthorities());
 
                 if (jwtUtil.validateToken(token)) {
-                    logger.info("✅ Token validated successfully");
+                    logger.info("Token validated successfully");
 
                     UsernamePasswordAuthenticationToken authToken = new UsernamePasswordAuthenticationToken(
                             userDetails,
@@ -72,12 +72,12 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
                     );
                     authToken.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
                     SecurityContextHolder.getContext().setAuthentication(authToken);
-                    logger.info("✅ Authentication SUCCESSFULLY set in SecurityContext");
+                    logger.info("Authentication SUCCESSFULLY set in SecurityContext");
                 } else {
-                    logger.warn("❌ Token validation failed");
+                    logger.warn("Token validation failed");
                 }
             } catch (Exception e) {
-                logger.error("❌ Error during authentication", e);
+                logger.error("Error during authentication", e);
             }
         } else {
             logger.info("SecurityContext already has authentication or no username extracted");

@@ -32,7 +32,7 @@ public class UserController {
     // POST /register
     @PostMapping("/register")
     public ResponseEntity<?> registerUser(@Valid @RequestBody RegistrationRequest request) {
-        // ✅ No try-catch needed - GlobalExceptionHandler will handle exceptions
+        // No try-catch needed - GlobalExceptionHandler will handle exceptions
         String result = userService.registerUser(request);
         return ResponseEntity.ok(result);
     }
@@ -84,11 +84,11 @@ public class UserController {
     // PUT /profile (Update your own profile)
     @PutMapping("/profile")
     public ResponseEntity<?> updateUserProfile(
-            @RequestBody ProfileUpdateRequest updateDetails,  // ✅ Changed DTO
+            @RequestBody ProfileUpdateRequest updateDetails,  // Changed DTO
             @AuthenticationPrincipal UserDetails currentUser) {
 
         String email = currentUser.getUsername();
-        userService.updateUserProfile(email, updateDetails);  // ✅ Pass new DTO
+        userService.updateUserProfile(email, updateDetails);  // Pass new DTO
         return ResponseEntity.ok("Profile updated successfully");
     }
 
@@ -102,7 +102,7 @@ public class UserController {
         return ResponseEntity.ok(result);
     }
 
-    // ✅ NEW: Get profile image
+    // NEW: Get profile image
     @GetMapping("/profile/image")
     public ResponseEntity<?> getProfileImage(@AuthenticationPrincipal UserDetails currentUser) {
         String email = currentUser.getUsername();
