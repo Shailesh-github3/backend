@@ -28,20 +28,20 @@ public class SecurityConfig {
         http
                 .csrf(csrf -> csrf.disable())
                 .authorizeHttpRequests(auth -> auth
-                        // ✅ PUBLIC ENDPOINTS (no auth required)
+                        // PUBLIC ENDPOINTS (no auth required)
                         .requestMatchers("/api/auth/**").permitAll()
                         .requestMatchers("/api/users/register").permitAll()
                         .requestMatchers("/api/users/college-students").permitAll()
                         .requestMatchers("/api/users/college-students/search").permitAll()
                         .requestMatchers("/api/college/**").permitAll()
 
-                        // ✅ FORUM BROWSING ENDPOINTS (PUBLIC - read-only)
+                        // FORUM BROWSING ENDPOINTS (PUBLIC - read-only)
                         .requestMatchers("/api/forum/all").permitAll()                    // List all forums
                         .requestMatchers("/api/forum/college/**").permitAll()             // Forums by college
                         .requestMatchers("/api/forum/*/posts").permitAll()                // Posts in forum
                         .requestMatchers("/api/forum/post/*/comments").permitAll()        // Comments on post
 
-                        // ❌ PROTECTED ENDPOINTS (require auth + role checks in service layer)
+                        // PROTECTED ENDPOINTS (require auth + role checks in service layer)
                         .anyRequest().authenticated()
                 )
                 .sessionManagement(session ->
