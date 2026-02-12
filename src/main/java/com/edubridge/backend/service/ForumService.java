@@ -18,19 +18,19 @@ import java.util.List;
 public class ForumService {
 
     @Autowired
-    private ForumRepository forumRepository;
+    private ForumRepository forumRepository;       // Repository - VALID
 
     @Autowired
-    private ForumPostRepository forumPostRepository;
+    private ForumPostRepository forumPostRepository; // Repository - VALID
 
     @Autowired
-    private ForumCommentRepository forumCommentRepository;
+    private ForumCommentRepository forumCommentRepository; // Repository - VALID
 
     @Autowired
-    private UserRepository userRepository;
+    private UserRepository userRepository;         // Repository - VALID
 
     @Autowired
-    private CollegeProfileRepository collegeProfileRepository;
+    private CollegeProfileRepository collegeProfileRepository; // Repository - VALID
 
     @Autowired
     private CollegeRepository collegeRepository;
@@ -115,6 +115,20 @@ public class ForumService {
         return forumCommentRepository.save(comment);
     }
 
+    @Transactional
+    public void deletePost(Long postId) {
+        ForumPost post = forumPostRepository.findById(postId)
+                .orElseThrow(() -> new ResourceNotFoundException("Post not found with ID: " + postId));
+        forumPostRepository.delete(post);
+    }
+
+    @Transactional
+    public void deleteComment(Long commentId) {
+        ForumComment comment = forumCommentRepository.findById(commentId)
+                .orElseThrow(() -> new ResourceNotFoundException("Comment not found with ID: " + commentId));
+        forumCommentRepository.delete(comment);
+    }
+
     // Anyone can view forums (read-only)
     public List<Forum> getAllForums() {
         return forumRepository.findAll();
@@ -133,5 +147,15 @@ public class ForumService {
     // Anyone can view comments on a post
     public List<ForumComment> getCommentsByPost(Long postId) {
         return forumCommentRepository.findByPostId(postId);
+    }
+
+    public ForumPost getPostById(Long postId) {
+        return forumPostRepository.findById(postId)
+                .orElseThrow(() -> new ResourceNotFoundException("Post not found"));
+    }
+
+    public ForumComment getCommentById(Long commentId) {
+        return forumCommentRepository.findById(commentId)
+                .orElseThrow(() -> new ResourceNotFoundException("Comment not found"));
     }
 }

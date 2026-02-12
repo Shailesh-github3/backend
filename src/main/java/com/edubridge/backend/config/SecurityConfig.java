@@ -41,6 +41,15 @@ public class SecurityConfig {
                         .requestMatchers("/api/forum/*/posts").permitAll()                // Posts in forum
                         .requestMatchers("/api/forum/post/*/comments").permitAll()        // Comments on post
 
+                        // ADMIN ENDPOINTS (role-based)
+                        .requestMatchers("/api/admin/**").hasRole("ADMIN")
+
+                        // ✅ Reporting endpoints (authenticated users can report)
+                        .requestMatchers("/api/report/**").authenticated()
+
+                        // ✅ Admin endpoints (role-based)
+                        .requestMatchers("/api/admin/**").hasRole("ADMIN")
+
                         // PROTECTED ENDPOINTS (require auth + role checks in service layer)
                         .anyRequest().authenticated()
                 )

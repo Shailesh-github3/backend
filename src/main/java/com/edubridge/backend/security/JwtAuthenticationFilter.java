@@ -33,17 +33,13 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
                                     FilterChain filterChain) throws ServletException, IOException {
 
         logger.info("JWT Filter triggered for: {}", request.getRequestURI());
-
         final String authHeader = request.getHeader("Authorization");
         logger.info("Header Authorization: {}", authHeader != null ? authHeader.substring(0, Math.min(30, authHeader.length())) : "null");
-
         String username = null;
         String token = null;
-
         if (authHeader != null && authHeader.startsWith("Bearer ")) {
             token = authHeader.substring(7);
             logger.info("Token extracted (first 20 chars): {}", token.substring(0, Math.min(20, token.length())));
-
             try {
                 username = jwtUtil.extractUsername(token);
                 logger.info("Username extracted from token: {}", username);

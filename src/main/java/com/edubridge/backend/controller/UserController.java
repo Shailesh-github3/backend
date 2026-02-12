@@ -4,7 +4,9 @@ import com.edubridge.backend.dto.request.CollegeSearchRequest;
 import com.edubridge.backend.dto.request.ProfileUpdateRequest;
 import com.edubridge.backend.dto.request.RegistrationRequest;
 import com.edubridge.backend.dto.response.CollegeStudentResponse;
+import com.edubridge.backend.exception.BadRequestException;
 import com.edubridge.backend.model.CollegeStudentProfile;
+import com.edubridge.backend.model.Role;
 import com.edubridge.backend.model.User;
 import com.edubridge.backend.service.UserService;
 import jakarta.validation.Valid;
@@ -33,6 +35,9 @@ public class UserController {
     @PostMapping("/register")
     public ResponseEntity<?> registerUser(@Valid @RequestBody RegistrationRequest request) {
         // No try-catch needed - GlobalExceptionHandler will handle exceptions
+        if (request.getRole() == Role.ADMIN) {
+            throw new BadRequestException("ADMIN role cannot be registered publicly. Contact system administrator.");
+        }
         String result = userService.registerUser(request);
         return ResponseEntity.ok(result);
     }

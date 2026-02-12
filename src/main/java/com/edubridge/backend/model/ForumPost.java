@@ -34,6 +34,9 @@ public class ForumPost {
     @Column(columnDefinition = "TEXT", nullable = false)
     private String content;
 
+    @Column(name = "is_deleted")
+    private boolean deleted = false;
+
     @CreationTimestamp
     private Date createdAt;
 
